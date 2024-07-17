@@ -1,0 +1,58 @@
+.programs{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 2rem;
+}
+.pro-head{
+    display: flex;
+    gap: 5rem;font-weight: bold; font-size: 3rem;
+    justify-content: center;
+    color: white;
+    text-transform: uppercase;
+    font-style: italic;
+}
+.pcategory
+{
+display: flex;
+gap: 1rem;
+}
+.cat{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--gray);
+    gap: 1rem
+    ;
+    padding: 2rem;
+    color: white;
+    justify-content: space-between;
+}
+.cat>:nth-child(1)
+{
+    width: 2rem;
+    height: 2rem;fill: white;
+
+}
+.cat>:nth-child(2)
+{
+    font-size: 1rem;
+    font-weight: bold;
+    
+}
+.cat>:nth-child(3)
+{
+    font-size: 1rem;
+    line-height: 25px;
+}
+.join{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+.join>img{
+    width: 1rem;
+}
+.cat:hover{
+    background-color: red;
+    cursor: pointer;
+}
