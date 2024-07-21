@@ -115,9 +115,10 @@
 }
 .hero-image {
   position: absolute;
-  top: 10rem;
+  top: 7.5rem;
   right: 8rem;
-  width: 23rem;
+  width: 20rem;
+  height: 35rem;
 }
 .hero-back {
   position: absolute;
