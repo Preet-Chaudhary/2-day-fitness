@@ -36,3 +36,13 @@
 .btn:hover{
   cursor: pointer;
 }
+.blur{
+  background: rgb(36, 140, 214);
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(212px);
+  z-index: -9;
+  width: 32rem;
+  height: 23rem;
+
+}

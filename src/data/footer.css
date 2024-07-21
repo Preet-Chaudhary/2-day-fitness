@@ -1,0 +1,26 @@
+.foot{
+    position: relative;
+}
+.foot>hr{
+    
+    border: 1px solid rgb(18, 15, 15);
+   
+ 
+}
+.footer{
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+    align-items: center;
+    justify-content: center;
+    height: 20rem;
+    
+}
+.footer>img{
+    width: 2rem;
+    height: 2rem;
+}
+.btn:hover{
+    cursor: pointer;
+}

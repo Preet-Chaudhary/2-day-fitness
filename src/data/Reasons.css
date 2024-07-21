@@ -83,3 +83,14 @@
 .partners>img{
     width: 2.5rem;
 }
+@media screen and (max-width: 768px)
+{
+    .reason{
+        flex-direction: column;
+
+    }
+    .left-r{
+        grid-auto-rows: auto;
+        overflow: hidden;
+    }
+   

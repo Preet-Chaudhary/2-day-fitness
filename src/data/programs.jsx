@@ -13,7 +13,8 @@ const Programs = () => {
       <div className="pcategory">
   {programsData.map(prop => (
     <div className="cat" key={prop.heading}>
-      <img src={prop.image} alt="" />
+      
+      {prop.icons}
       <span>{prop.heading}</span>
       <span>{prop.details}</span>
       <div className="join">

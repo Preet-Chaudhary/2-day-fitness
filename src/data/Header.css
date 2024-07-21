@@ -24,3 +24,15 @@
     cursor: pointer;
     color: rgb(196, 37, 12)
 }
+@media screen and (max-width: 768px){
+    .header>:nth-child(2){
+        position: fixed;
+        right: 2rem;
+        z-index: 5;
+    }
+    .header-menu{
+        flex-direction: column;
+       background-color: gray;
+       padding: 10px 5px 10px 5px ;
+    }
+}

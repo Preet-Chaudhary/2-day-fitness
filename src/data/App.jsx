@@ -5,6 +5,9 @@ import Hero from './Hero'
 import Programs from "./programs";
 import Reasons from "./Reasons";
 import Plans from "./plans";
+import Testimonials from "./testimonials";
+import Join from "./join";
+import Footer from "./footer";
 export default function App()
 
 {
@@ -14,6 +17,9 @@ export default function App()
           <Programs/>
           <Reasons/>
           <Plans/>
+          <Testimonials/>
+          <Join/>
+          <Footer/>
         </div>
     )
 

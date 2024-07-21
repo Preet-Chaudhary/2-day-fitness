@@ -5,14 +5,21 @@ import Heart from "../assets/heart.png";
 import Heroimage from "../assets/hero_image.png";
 import heroback from "../assets/hero_image_back.png";
 import calories from "../assets/calories.png";
+import {motion} from 'framer-motion'
 const Hero = () => {
+  const transition={type: 'spring', duration :3}
   return (
     <div className="Hero">
+      <div className="blur blur-h"></div>
       <div className="left-h">
         <Header />
         {/* THE BEST ADDD */}
         <div className="the-best-ad">
-          <div></div>
+          <motion.div
+          initial={{left: '180px'}}
+          whileInView={{left: '10px'}}
+          transition={transition}
+          ></motion.div>
           <span>the best gym in pilkhuwa</span>
         </div>
         {/* THE HERO HADDING */}
@@ -58,14 +65,23 @@ const Hero = () => {
           <span> 116 BPM</span>
         </div>
         <img src={Heroimage} className="hero-image" alt="" />
-        <img src={heroback} className="hero-back" alt="" />
-        <div className="calories">
+        
+        <motion.img
+        initial={{right: '11rem'}}
+        whileInView={{right: '20rem'}}
+        transition={transition}
+        src={heroback} className="hero-back" alt="" />
+        <motion.div
+        initial={{right:'50rem'}}
+        whileInView={{right:'30rem'}}
+        transition={transition}
+        className="calories">
           <img src={calories} alt="" />
           <div>
             <span>Calories Burned</span>
             <span>250 kcal</span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
