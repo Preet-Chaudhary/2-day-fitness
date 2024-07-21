@@ -115,17 +115,18 @@
 }
 .hero-image {
   position: absolute;
-  top: 7.5rem;
+  top: 7.8rem;
   right: 8rem;
-  width: 20rem;
+  width: 18rem;
   height: 35rem;
 }
 .hero-back {
   position: absolute;
   top: 4rem;
-  right: 20rem;
+  right: 4rem;
+  filter: blur(1px);
   z-index: -1;
-  width: 15rem;
+  width: 40rem;
 }
 .calories {
   display: flex;
