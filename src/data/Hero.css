@@ -116,7 +116,7 @@
 .hero-image {
   position: absolute;
   top: 7.8rem;
-  right: 8rem;
+  right: 12rem;
   width: 18rem;
   height: 35rem;
 }
@@ -220,7 +220,8 @@
     align-self: center;
   }
   .hero-back{
-    width: 15rem;
+    width: 30rem;
+    hei
     left: 2rem;
     top: 0rem;
   }
