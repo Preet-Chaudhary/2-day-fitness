@@ -9,9 +9,10 @@ const Footer = () => {
       <div className="blur"></div>
       <hr />
       <div className="footer">
-        <img src={Github} alt="" />
-        <img src={Linkedin} alt="" />
-        <img src={Instagram} alt="" />
+       <a href="https://github.com/Preet-Chaudhary"> <img src={Github} alt="" /></a> 
+       <a href="https://www.linkedin.com/in/preet-chaudhary/"> <img src={Linkedin} alt="" /></a> 
+       <a href="https://www.instagram.com/preetchaudhary110/"> <img src={Instagram} alt="" /></a> 
+       
       </div>
      
      

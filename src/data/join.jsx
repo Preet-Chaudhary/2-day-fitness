@@ -2,11 +2,12 @@ import React, { useRef } from "react";
 import "./join.css";
 import emailjs from "@emailjs/browser";
 
+
 const Join = () => {
   const form = useRef();
   const sendEmail = (e) => {
     e.preventDefault();
-
+    alert('Your Request Was Sent Successfully')
     emailjs
       .sendForm(
         "service_b72nwel",
@@ -44,7 +45,7 @@ const Join = () => {
             name="user-email"
             placeholder="Enter your E-mail address"
           />
-          <button className="btn btn-j">Join now</button>
+          <button  className="btn btn-j">Join now</button>
         </form>
       </div>
     </div>

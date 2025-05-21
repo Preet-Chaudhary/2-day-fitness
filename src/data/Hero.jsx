@@ -4,10 +4,11 @@ import Header from "./Header";
 import Heart from "../assets/heart.png";
 import Heroimage from "../assets/hero_image.png";
 import heroback from "../assets/hero_image_back.png";
+import { Link } from "react-scroll";
 import calories from "../assets/calories.png";
-import {motion} from 'framer-motion'
+import { motion } from "framer-motion";
 const Hero = () => {
-  const transition={type: 'spring', duration :3}
+  const transition = { type: "spring", duration: 3 };
   return (
     <div className="Hero">
       <div className="blur blur-h"></div>
@@ -16,9 +17,9 @@ const Hero = () => {
         {/* THE BEST ADDD */}
         <div className="the-best-ad">
           <motion.div
-          initial={{left: '180px'}}
-          whileInView={{left: '10px'}}
-          transition={transition}
+            initial={{ left: "180px" }}
+            whileInView={{ left: "10px" }}
+            transition={transition}
           ></motion.div>
           <span>the best gym in pilkhuwa</span>
         </div>
@@ -52,12 +53,28 @@ const Hero = () => {
           </div>
         </div>
         <div className="hero-buttons">
-          <button className="btn">Get Started</button>
-          <button className="btn">Learn More</button>
+          <button className="btn"> <Link
+              to="planscon"
+              spy={true}
+              smooth={true}
+            >
+            
+           Get Started
+            </Link></button>
+          <button className="btn">
+            <Link
+              to="programs"
+              spy={true}
+              smooth={true}
+            >
+            
+           Learn More
+            </Link>
+          </button>
         </div>
       </div>
       <div className="right-h">
-        <button className="btn">Join Now</button>
+        <a href="https://www.instagram.com/2_day_fitness/"><button  className="btn">Join Now</button></a>
 
         <div className="heart-rate">
           <img src={Heart} alt="" />
@@ -65,17 +82,21 @@ const Hero = () => {
           <span> 116 BPM</span>
         </div>
         <img src={Heroimage} className="hero-image" alt="" />
-        
+
         <motion.img
-        initial={{right: '5rem'}}
-        whileInView={{right: '10rem'}}
-        transition={transition}
-        src={heroback} className="hero-back" alt="" />
+          initial={{ right: "5rem" }}
+          whileInView={{ right: "10rem" }}
+          transition={transition}
+          src={heroback}
+          className="hero-back"
+          alt=""
+        />
         <motion.div
-        initial={{right:'50rem'}}
-        whileInView={{right:'30rem'}}
-        transition={transition}
-        className="calories">
+          initial={{ right: "50rem" }}
+          whileInView={{ right: "30rem" }}
+          transition={transition}
+          className="calories"
+        >
           <img src={calories} alt="" />
           <div>
             <span>Calories Burned</span>
