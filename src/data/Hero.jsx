@@ -1,6 +1,5 @@
 import React from "react";
 import "./Hero.css";
-import Header from "./Header";
 import Heart from "../assets/heart.png";
 import Heroimage from "../assets/hero_image.png";
 import heroback from "../assets/hero_image_back.png";
@@ -13,7 +12,6 @@ const Hero = () => {
     <div className="Hero">
       <div className="blur blur-h"></div>
       <div className="left-h">
-        <Header />
         {/* THE BEST ADDD */}
         <div className="the-best-ad">
           <motion.div

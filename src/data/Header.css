@@ -13,16 +13,40 @@
 .header-menu{
     list-style: none;
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     color: white;
     align-items: center;
 }
+
 .header-menu>li{
     cursor: pointer;
 }
+
+/* Style all navigation links as buttons */
+.header-menu>li>a, .header-menu>li>button {
+    background: linear-gradient(135deg, var(--orange) 0%, #ff8c00 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.header-menu>li>a:hover, .header-menu>li>button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
+    background: linear-gradient(135deg, #ff8c00 0%, var(--orange) 100%);
+}
+
 .header-menu>li:hover{
     cursor: pointer;
-    color: rgb(196, 37, 12)
 }
 @media screen and (max-width: 768px){
     .header>:nth-child(2){
@@ -32,7 +56,17 @@
     }
     .header-menu{
         flex-direction: column;
-       background-color: gray;
-       padding: 10px 5px 10px 5px ;
+        background-color: rgba(0, 0, 0, 0.9);
+        padding: 1rem;
+        border-radius: 12px;
+        gap: 0.8rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 165, 0, 0.3);
+    }
+    
+    .header-menu>li>a, .header-menu>li>button {
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem 1rem;
     }
 }

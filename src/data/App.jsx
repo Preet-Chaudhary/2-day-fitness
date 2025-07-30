@@ -1,6 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import './App.css'
+import Header from './Header'
 import Hero from './Hero'
 import Programs from "./programs";
 import Reasons from "./Reasons";
@@ -9,10 +9,10 @@ import Testimonials from "./testimonials";
 import Join from "./join";
 import Footer from "./footer";
 export default function App()
-
 {
     return(
         <div className="App">
+          <Header />
           <Hero />
           <Programs/>
           <Reasons/>
@@ -22,6 +22,4 @@ export default function App()
           <Footer/>
         </div>
     )
-
-    
 }

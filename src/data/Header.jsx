@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-scroll";
+import { useAuth } from "../context/AuthContext";
+import AuthModal from "../components/Auth/AuthModal";
+import UserProfile from "../components/Auth/UserProfile";
 import "./Header.css";
 import Logo from "../assets/new logo.png"; // fixed naming convention issue
 import Bars from "../assets/bars.png";
@@ -7,6 +10,9 @@ import Bars from "../assets/bars.png";
 const Header = () => {
   const [mobile, setMobile] = useState(window.innerWidth <= 768);
   const [menuOpened, setMenuOpened] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     const handleResize = () => {
@@ -90,9 +96,28 @@ const Header = () => {
                 Testimonials
               </Link>
             </li>
+            <li>
+              {isAuthenticated ? (
+                <UserProfile />
+              ) : (
+                <button 
+                  onClick={() => {
+                    setAuthModalOpen(true);
+                    setMenuOpened(false);
+                  }}
+                >
+                  Sign Up / Login
+                </button>
+              )}
+            </li>
           </ul>
         )}
       </div>
+      
+      <AuthModal 
+        isOpen={authModalOpen} 
+        onClose={() => setAuthModalOpen(false)} 
+      />
     </div>
   );
 };
