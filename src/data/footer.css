@@ -1,28 +1,68 @@
 .foot{
     position: relative;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+    margin-top: 4rem;
 }
+
 .foot>hr{
-    
-    border: 1px solid rgb(18, 15, 15);
-   
- 
+    border: 2px solid var(--orange);
+    box-shadow: 0 0 15px rgba(255, 101, 0, 0.5);
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    height: 2px;
 }
+
 .footer{
-    padding: 1rem 2rem;
+    padding: 3rem 2rem;
     display: flex;
     flex-direction: row;
     gap: 4rem;
     align-items: center;
     justify-content: center;
+    height: auto;
+    position: relative;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30rem;
     height: 20rem;
-    
+    background: linear-gradient(135deg, var(--orange), #ff8c42);
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.1;
+    z-index: -1;
+    transform: translate(-50%, -50%);
 }
+
+.footer>a{
+    transition: all 0.3s ease;
+    padding: 1rem;
+    border-radius: 15px;
+    background: rgba(26, 26, 26, 0.8);
+    border: 2px solid transparent;
+    backdrop-filter: blur(10px);
+}
+
+.footer>a:hover {
+    transform: translateY(-10px) scale(1.1);
+    border: 2px solid var(--orange);
+    box-shadow: 0 15px 30px rgba(255, 101, 0, 0.4);
+    background: rgba(45, 45, 45, 0.9);
+}
+
 .footer>a>img{
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
+    transition: all 0.3s ease;
+    filter: brightness(0) saturate(100%) invert(100%);
 }
-.btn:hover{
-    cursor: pointer;
+
+.footer>a:hover>img {
+    filter: brightness(0) saturate(100%) invert(60%) sepia(85%) saturate(2030%) hue-rotate(14deg) brightness(105%) contrast(101%);
+    transform: rotate(10deg) scale(1.1);
 }
 @media screen and (max-width: 768px){
     

@@ -2,7 +2,27 @@
 {
     display: flex;
     padding: 0 2rem;
+    margin: 4rem 0;
+    position: relative;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--orange);
+    overflow: hidden;
 }
+
+.join::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--orange), #ff8c42);
+    opacity: 0.05;
+    z-index: -1;
+}
+
 .left-j
 {
     color: white;
@@ -10,13 +30,18 @@
     font-weight: bold;
     text-transform: uppercase;
     position: relative;
+    flex: 1;
+    padding: 2rem;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
+
 .left-j>hr{
     position: absolute;
     width: 10.5rem;
-    border: 2px solid red;
-    border-radius: 20%;
+    border: 3px solid var(--orange);
+    border-radius: 20px;
     margin: -10px;
+    box-shadow: 0 0 15px rgba(255, 101, 0, 0.5);
 }
 .right-join
 {
@@ -24,30 +49,62 @@
     justify-content: center; 
     flex-direction: row-reverse;
     align-items: flex-end;
+    flex: 1;
+}
 
-}
 .email{
-    display: flex;gap: 3rem;
-    background: var(--gray);
-    padding: 1rem;
-    margin: 7rem;
+    display: flex;
+    gap: 1rem;
+    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+    padding: 1.5rem;
+    margin: 7rem 2rem;
+    border-radius: 20px;
+    border: 2px solid var(--orange);
+    box-shadow: 0 15px 35px rgba(255, 101, 0, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    min-width: 300px;
 }
+
+.email:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 45px rgba(255, 101, 0, 0.5);
+}
+
 .email>input{
     background-color: transparent;
     border: none;
     outline: none;
-    color: var(--lightgrayz);
-
-
+    color: white;
+    font-size: 1rem;
+    flex: 1;
+    padding: 0.5rem;
 }
+
 ::placeholder{
-    color: black;
+    color: var(--textLight);
+    opacity: 0.7;
 }
+
 .btn-j{
-    background-color: red;
+    background: linear-gradient(45deg, var(--orange), #ff8c42);
+    color: black;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 5px 15px rgba(255, 101, 0, 0.3);
 }
+
 .btn-j:hover{
-    background-color: lightcoral;
+    background: linear-gradient(45deg, #ff8c42, var(--orange));
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 101, 0, 0.5);
+}
 }
 @media screen and (max-width: 768px){
    .join{

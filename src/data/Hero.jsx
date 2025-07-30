@@ -71,9 +71,20 @@ const Hero = () => {
           </button>
         </div>
       </div>
+      
+      {/* View Gym Button - Outside container to avoid positioning issues */}
+      <button 
+        className="view-gym-btn" 
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          window.open('https://www.instagram.com/2_day_fitness/', '_blank');
+        }}
+      >
+        View Gym
+      </button>
+      
       <div className="right-h">
-        <a href="https://www.instagram.com/2_day_fitness/"><button  className="btn">Join Now</button></a>
-
         <div className="heart-rate">
           <img src={Heart} alt="" />
           <span>Heart Rate</span>

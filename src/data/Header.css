@@ -2,51 +2,87 @@
 {
     display: flex;
     justify-content: space-between;
-    
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(26, 26, 26, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--orange);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
+
 .logo
 {
    width: 10rem;
    height: 3rem;
-   
+   transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px var(--orange));
 }
 .header-menu{
     list-style: none;
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     color: white;
     align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 .header-menu>li{
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-/* Style all navigation links as buttons */
+.header-menu>li:hover {
+    transform: translateY(-2px);
+}
+
+/* Style all navigation links as modern buttons */
 .header-menu>li>a, .header-menu>li>button {
-    background: linear-gradient(135deg, var(--orange) 0%, #ff8c00 100%);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, var(--orange) 0%, #ff8c42 100%);
+    border: 2px solid transparent;
+    border-radius: 15px;
+    color: black;
+    padding: 0.8rem 1.5rem;
     font-size: 0.9rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     text-decoration: none;
     display: inline-block;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(255, 101, 0, 0.3);
+}
+
+.header-menu>li>a::before, .header-menu>li>button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.header-menu>li>a:hover::before, .header-menu>li>button:hover::before {
+    left: 100%;
 }
 
 .header-menu>li>a:hover, .header-menu>li>button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
-    background: linear-gradient(135deg, #ff8c00 0%, var(--orange) 100%);
-}
-
-.header-menu>li:hover{
-    cursor: pointer;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 101, 0, 0.5);
+    background: linear-gradient(135deg, #ff8c42 0%, var(--orange) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 @media screen and (max-width: 768px){
     .header>:nth-child(2){

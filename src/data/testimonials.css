@@ -1,37 +1,72 @@
 .test{
-    display: flex;gap: 1rem;
+    display: flex;
+    gap: 3rem;
     padding: 0 2rem;
-
+    margin: 4rem 0;
+    position: relative;
 }
+
+.test::before {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 40rem;
+    height: 30rem;
+    background: linear-gradient(135deg, var(--orange), #ff8c42);
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.1;
+    z-index: -1;
+    transform: translateX(-50%);
+}
+
 .left-t{
-    display: flex;flex: 1 1;
-    gap: 2rem;flex-direction: column;
-    text-transform: uppercase; color: white;
+    display: flex;
+    flex: 1 1;
+    gap: 2rem;
+    flex-direction: column;
+    text-transform: uppercase;
+    color: white;
+    z-index: 2;
+}
 
-}
-.left-t>:nth-child(1)
-{
-    color: orange;
+.left-t>:nth-child(1) {
+    color: var(--orange);
     font-weight: bold;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 101, 0, 0.5);
 }
-.left-t>:nth-child(2)
-,.left-t>:nth-child(3)
-{
-font-weight: bold;
-font-size: 3rem;
+
+.left-t>:nth-child(2),
+.left-t>:nth-child(3) {
+    font-weight: bold;
+    font-size: 3rem;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    animation: slideInLeft 1s ease-out;
 }
-.left-t>:nth-child(4)
-{
+
+.left-t>:nth-child(4) {
     text-transform: none;
     text-align: justify;
-    letter-spacing: 2px;
-    line-height: 40px;
+    letter-spacing: 1px;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    opacity: 0.9;
+    background: rgba(26, 26, 26, 0.8);
+    padding: 2rem;
+    border-radius: 15px;
+    border-left: 4px solid var(--orange);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 .right-t{
     flex: 1;
     position: relative;
-
+    z-index: 2;
 }
+
 .right-t>img{
     position: absolute;
     width: 17rem;
@@ -39,14 +74,35 @@ font-size: 3rem;
     object-fit: cover;
     right: 8rem;
     top: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s ease;
+    border: 2px solid transparent;
 }
+
+.right-t>img:hover {
+    transform: scale(1.05) rotate(2deg);
+    border: 2px solid var(--orange);
+    box-shadow: 0 20px 45px rgba(255, 101, 0, 0.4);
+}
+
 .right-t>:nth-child(1){
     position: absolute;
-    width: 17rem;height: 20rem;
-    border: 2px solid red;
-    background-color: transparent;
+    width: 17rem;
+    height: 20rem;
+    border: 3px solid var(--orange);
+    background: transparent;
     right: 9rem;
-    bottom: .9rem;
+    bottom: 0.9rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(255, 101, 0, 0.3);
+    transition: all 0.4s ease;
+}
+
+.right-t:hover>:nth-child(1) {
+    transform: translate(-10px, -10px);
+    box-shadow: 0 15px 35px rgba(255, 101, 0, 0.5);
+}
 
 }
 .right-t>:nth-child(2)

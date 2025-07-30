@@ -1,19 +1,45 @@
 .reason{
     padding: 0 2rem;
     display: flex;
-    gap: 2rem;
-
-    
+    gap: 3rem;
+    margin: 4rem 0;
+    position: relative;
 }
+
+.reason::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    width: 30rem;
+    height: 20rem;
+    background: linear-gradient(135deg, var(--orange), #ff8c42);
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.1;
+    z-index: -1;
+}
+
 .left-r{
     flex: 1;
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    gap: 1rem;
+    gap: 1.5rem;
     grid-auto-rows: 1fr;
 }
+
 .left-r>img{
     object-fit: cover;
+    border-radius: 20px;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 2px solid transparent;
+}
+
+.left-r>img:hover {
+    transform: scale(1.05);
+    border: 2px solid var(--orange);
+    box-shadow: 0 15px 40px rgba(255, 101, 0, 0.4);
 }
 .left-r>:nth-child(1)
 {
