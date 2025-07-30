@@ -1,0 +1,620 @@
+/* Payment Modal Overlay */
+.payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1500;
+  backdrop-filter: blur(8px);
+}
+
+/* Payment Modal Container */
+.payment-modal {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+}
+
+/* Close Button */
+.payment-close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, var(--orange) 0%, #ff8c00 100%);
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.payment-close-button:hover {
+  transform: translateY(-2px) rotate(90deg);
+  box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
+}
+
+/* Progress Indicator */
+.payment-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 2rem;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.progress-step span {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.progress-step.active span {
+  background: linear-gradient(135deg, var(--orange) 0%, #ff8c00 100%);
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.3);
+}
+
+.progress-step.completed span {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+}
+
+.progress-step label {
+  color: #ccc;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.progress-step.active label {
+  color: var(--orange);
+}
+
+.progress-step.completed label {
+  color: #28a745;
+}
+
+/* Step Content */
+.payment-step {
+  color: white;
+}
+
+.payment-step h3 {
+  color: var(--orange);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Plan Summary */
+.plan-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.plan-info, .user-info {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 165, 0, 0.1);
+}
+
+.plan-info h4, .user-info h4 {
+  color: var(--orange);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.plan-price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--orange);
+  margin: 0.5rem 0;
+}
+
+.plan-price span {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.plan-features li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ccc;
+}
+
+.plan-features li:last-child {
+  border-bottom: none;
+}
+
+.user-info p {
+  margin: 0.5rem 0;
+  color: #ccc;
+}
+
+/* Payment Form */
+.payment-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: var(--orange);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--orange);
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px rgba(255, 165, 0, 0.2);
+}
+
+.form-group input::placeholder {
+  color: #666;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Payment Total */
+.payment-total {
+  background: rgba(255, 165, 0, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  color: #ccc;
+}
+
+.total-line.total {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--orange);
+  border-top: 1px solid rgba(255, 165, 0, 0.3);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Payment Buttons */
+.payment-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.payment-btn.primary {
+  background: linear-gradient(135deg, var(--orange) 0%, #ff8c00 100%);
+  color: white;
+}
+
+.payment-btn.primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 165, 0, 0.3);
+}
+
+.payment-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.payment-btn.secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.payment-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.payment-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+/* Processing Step */
+.payment-step.processing {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.processing-animation {
+  margin-bottom: 2rem;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 165, 0, 0.3);
+  border-top: 4px solid var(--orange);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.processing-note {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* Success Step */
+.payment-step.success {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+  margin: 0 auto 1.5rem;
+  animation: successPulse 2s ease-in-out;
+}
+
+@keyframes successPulse {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Error Message */
+.error-message {
+  background-color: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  color: #ff6b6b;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .payment-modal {
+    padding: 1.5rem;
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
+
+  .payment-progress {
+    gap: 1rem;
+  }
+
+  .progress-step span {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+
+  .progress-step label {
+    font-size: 0.8rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-actions {
+    flex-direction: column-reverse;
+  }
+
+  .plan-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-modal {
+    padding: 1rem;
+  }
+
+  .payment-close-button {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+
+  .payment-step h3 {
+    font-size: 1.5rem;
+  }
+
+  .plan-price {
+    font-size: 1.5rem;
+  }
+}
+
+/* Stripe-specific styles */
+.stripe-card-section {
+  margin: 1.5rem 0;
+}
+
+.stripe-card-section label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.stripe-card-element {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 165, 0, 0.3);
+  border-radius: 10px;
+  padding: 1rem;
+  transition: border-color 0.3s ease;
+  min-height: 40px;
+}
+
+.stripe-card-element:focus {
+  border-color: var(--orange);
+  outline: none;
+}
+
+.stripe-card-element.StripeElement--invalid {
+  border-color: #e74c3c;
+}
+
+.stripe-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #888;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.stripe-badge strong {
+  color: #635bff;
+  font-weight: 600;
+}
+
+.plan-summary-compact {
+  background: rgba(255, 165, 0, 0.1);
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.plan-summary-compact span:first-child {
+  font-weight: 600;
+  color: #fff;
+}
+
+.plan-summary-compact span:last-child {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--orange);
+}
+
+/* Progress steps styling */
+.payment-progress {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.payment-progress::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: rgba(255, 165, 0, 0.2);
+  z-index: 1;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.progress-step span {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 165, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.progress-step.active {
+  color: var(--orange);
+}
+
+.progress-step.active span {
+  background: linear-gradient(135deg, var(--orange) 0%, #ff8c00 100%);
+  border-color: var(--orange);
+  color: white;
+}
+
+.progress-step.completed {
+  color: #4ade80;
+}
+
+.progress-step.completed span {
+  background: #4ade80;
+  border-color: #4ade80;
+  color: white;
+}
+
+.progress-step.completed span::after {
+  content: '✓';
+}
+
+/* Payment header improvements */
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 165, 0, 0.2);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  color: var(--orange);
+}
+
+/* Form improvements */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-row.three-columns {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.payment-footer {
+  border-top: 1px solid rgba(255, 165, 0, 0.2);
+  padding-top: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Responsive adjustments for Stripe */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-row.three-columns {
+    grid-template-columns: 1fr;
+  }
+  
+  .payment-progress {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .payment-progress::before {
+    display: none;
+  }
+}

@@ -3,6 +3,8 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const connectDB = require('./config/database');
 const User = require('./models/User');
+const Subscription = require('./models/Subscription');
+const stripeService = require('./services/stripeService');
 require('dotenv').config();
 
 const app = express();
@@ -188,6 +190,257 @@ app.get('/api/users', async (req, res) => {
   }
 });
 
+// Payment Processing Routes with Stripe
+app.post('/api/payment/create-intent', authenticateToken, async (req, res) => {
+  try {
+    const { planName, duration, price } = req.body;
+    const userId = req.user.userId;
+
+    // Validate required fields
+    if (!planName || !duration || !price) {
+      return res.status(400).json({ 
+        error: 'Missing required payment information' 
+      });
+    }
+
+    // Calculate tax (18% GST)
+    const taxRate = 0.18;
+    const subtotal = parseFloat(price);
+    const taxAmount = subtotal * taxRate;
+    const totalAmount = subtotal + taxAmount;
+
+    // Get user details
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Create payment intent with Stripe
+    const paymentIntent = await stripeService.createPaymentIntent(
+      totalAmount,
+      'inr',
+      {
+        userId: userId,
+        planName: planName,
+        duration: duration.toString(),
+        userEmail: user.email
+      }
+    );
+
+    if (!paymentIntent.success) {
+      return res.status(400).json({ 
+        error: 'Failed to create payment intent',
+        details: paymentIntent.error 
+      });
+    }
+
+    res.json({
+      success: true,
+      clientSecret: paymentIntent.clientSecret,
+      paymentIntentId: paymentIntent.paymentIntentId,
+      amount: totalAmount
+    });
+
+  } catch (error) {
+    console.error('Payment intent creation error:', error);
+    res.status(500).json({ 
+      error: 'Internal server error during payment setup' 
+    });
+  }
+});
+
+app.post('/api/payment/process', authenticateToken, async (req, res) => {
+  try {
+    const { planName, duration, price, paymentIntentId } = req.body;
+    const userId = req.user.userId;
+
+    // Validate required fields
+    if (!planName || !duration || !price || !paymentIntentId) {
+      return res.status(400).json({ 
+        error: 'Missing required payment information' 
+      });
+    }
+
+    // Confirm payment with Stripe
+    const paymentResult = await stripeService.confirmPaymentIntent(paymentIntentId);
+
+    if (!paymentResult.success || paymentResult.status !== 'succeeded') {
+      return res.status(400).json({ 
+        error: 'Payment was not successful',
+        details: paymentResult.error || 'Payment failed' 
+      });
+    }
+
+    // Calculate tax (18% GST)
+    const taxRate = 0.18;
+    const subtotal = parseFloat(price);
+    const taxAmount = subtotal * taxRate;
+    const totalAmount = subtotal + taxAmount;
+
+    // Create subscription record
+    const subscription = new Subscription({
+      userId: userId,
+      planName: planName,
+      duration: duration,
+      price: subtotal,
+      taxAmount: taxAmount,
+      totalAmount: totalAmount,
+      paymentMethod: 'stripe',
+      transactionId: paymentIntentId,
+      stripePaymentIntentId: paymentIntentId,
+      status: 'active',
+      billingCycle: duration === 1 ? 'monthly' : duration === 12 ? 'yearly' : 'custom',
+    });
+
+    await subscription.save();
+
+    // Update user's subscription status
+    await User.findByIdAndUpdate(userId, {
+      subscription: {
+        planName: planName,
+        status: 'active',
+        startDate: subscription.startDate,
+        endDate: subscription.endDate
+      }
+    });
+
+    res.json({
+      success: true,
+      message: 'Payment processed successfully with Stripe',
+      subscription: {
+        id: subscription._id,
+        planName: subscription.planName,
+        duration: subscription.duration,
+        totalAmount: subscription.totalAmount,
+        status: subscription.status,
+        startDate: subscription.startDate,
+        endDate: subscription.endDate,
+        transactionId: subscription.transactionId
+      }
+    });
+
+  } catch (error) {
+    console.error('Payment processing error:', error);
+    res.status(500).json({ 
+      error: 'Internal server error during payment processing' 
+    });
+  }
+});
+
+// Stripe webhook handler
+app.post('/api/payment/webhook', express.raw({type: 'application/json'}), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+
+  try {
+    const webhookResult = await stripeService.handleWebhook(req.body, sig);
+    
+    if (!webhookResult.success) {
+      return res.status(400).send(`Webhook Error: ${webhookResult.error}`);
+    }
+
+    const event = webhookResult.event;
+
+    // Handle the event
+    switch (event.type) {
+      case 'payment_intent.succeeded':
+        console.log('Payment succeeded:', event.data.object.id);
+        // You can update subscription status here if needed
+        break;
+      case 'payment_intent.payment_failed':
+        console.log('Payment failed:', event.data.object.id);
+        // Handle failed payment
+        break;
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
+    res.json({received: true});
+  } catch (err) {
+    console.error('Webhook signature verification failed:', err);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+});
+
+// Get user subscriptions
+app.get('/api/payment/subscriptions', authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    
+    const subscriptions = await Subscription.find({ userId: userId })
+      .sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      subscriptions: subscriptions.map(sub => ({
+        id: sub._id,
+        planName: sub.planName,
+        duration: sub.duration,
+        totalAmount: sub.totalAmount,
+        status: sub.status,
+        startDate: sub.startDate,
+        endDate: sub.endDate,
+        daysRemaining: sub.daysRemaining,
+        createdAt: sub.createdAt
+      }))
+    });
+
+  } catch (error) {
+    console.error('Error fetching subscriptions:', error);
+    res.status(500).json({ 
+      error: 'Failed to fetch subscriptions' 
+    });
+  }
+});
+
+// Cancel subscription
+app.post('/api/payment/cancel/:subscriptionId', authenticateToken, async (req, res) => {
+  try {
+    const { subscriptionId } = req.params;
+    const userId = req.user.userId;
+
+    const subscription = await Subscription.findOne({
+      _id: subscriptionId,
+      userId: userId
+    });
+
+    if (!subscription) {
+      return res.status(404).json({ 
+        error: 'Subscription not found' 
+      });
+    }
+
+    if (subscription.status === 'cancelled') {
+      return res.status(400).json({ 
+        error: 'Subscription is already cancelled' 
+      });
+    }
+
+    // Cancel the subscription
+    await subscription.cancel();
+
+    // Update user's subscription status
+    await User.findByIdAndUpdate(userId, {
+      'subscription.status': 'cancelled'
+    });
+
+    res.json({
+      success: true,
+      message: 'Subscription cancelled successfully',
+      subscription: {
+        id: subscription._id,
+        status: subscription.status,
+        cancelledAt: subscription.cancelledAt
+      }
+    });
+
+  } catch (error) {
+    console.error('Error cancelling subscription:', error);
+    res.status(500).json({ 
+      error: 'Failed to cancel subscription' 
+    });
+  }
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -207,6 +460,11 @@ app.listen(PORT, () => {
   console.log(`- POST /api/login - Login to existing account`);
   console.log(`- GET /api/profile - Get user profile (requires auth)`);
   console.log(`- POST /api/logout - Logout`);
+  console.log(`- POST /api/payment/create-intent - Create Stripe payment intent (requires auth)`);
+  console.log(`- POST /api/payment/process - Process Stripe payment (requires auth)`);
+  console.log(`- GET /api/payment/subscriptions - Get user subscriptions (requires auth)`);
+  console.log(`- POST /api/payment/cancel/:id - Cancel subscription (requires auth)`);
+  console.log(`- POST /api/payment/webhook - Stripe webhook handler`);
 });
 
 module.exports = app;
